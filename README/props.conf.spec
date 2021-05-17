@@ -1,4 +1,4 @@
-#   Version 7.3.6
+#   Version 7.3.7
 #
 # This file contains possible setting/value pairs for configuring Splunk
 # software's processing properties through props.conf.
