@@ -1,4 +1,4 @@
-#   Version 7.1.8
+#   Version 7.1.9
 #
 # This file describes some of the settings that are used, and
 # can be configured on a per-user basis for use by the Splunk Web UI.
@@ -91,6 +91,10 @@ hideInstrumentationOptInModal = <boolean>
 default_earliest_time = <string>
 default_latest_time = <string>
 * Sets the global default time range across all apps, users, and roles on the search page.
+
+notification_python_3_impact = <string>
+* Flag to enable, disable, or snooze the python 3 impact notification dialog
+* default to true
 
 [role_<name>]
 

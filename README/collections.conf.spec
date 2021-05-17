@@ -1,4 +1,4 @@
-#   Version 7.1.8
+#   Version 7.1.9
 #
 # This file configures the KV Store collections for a given app in Splunk.
 #

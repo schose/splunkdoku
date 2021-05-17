@@ -1,4 +1,4 @@
-#   Version 7.1.8
+#   Version 7.1.9
 #
 ############################################################################
 # OVERVIEW
@@ -2103,6 +2103,20 @@ perf_warn_limit = <integer>
   events
 * When set to “0”: Specifies for no message (message is always INFO level)
 * Default: 10000
+
+[auth]
+* Settings for managing auth features.
+
+enable_install_apps = <boolean>
+* Whether or not the "install_apps" capability is enabled for app installation,
+  uninstallation, creation, and update.
+* If set to "true", you must be assigned a role that holds the 'install_apps'
+  capability to access the 'apps/local' REST endpoint for app installation,
+  uninstallation, creation, and update.
+* If set to "false", you must be assigned a role that holds either the
+  'admin_all_objects' or 'edit_local_apps' capabilities for app installation,
+  uninstallation, creation, and update.
+* Default: false
 
 
 [http_input]
