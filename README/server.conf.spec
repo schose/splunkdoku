@@ -1,4 +1,4 @@
-#   Version 7.1.9
+#   Version 7.1.10
 #
 # This file contains the set of attributes and values you can use to
 # configure server options in server.conf.
@@ -386,8 +386,6 @@ sslCommonNameToCheck = <commonName1>, <commonName2>, ...
   splunkd will limit most outbound HTTPS connections to hosts which use
   a cert with one of the listed common names.
 * The most important scenario is distributed search.
-* This feature does not work with the deployment server and client
-  communication over SSL.
 * Optional.  Defaults to no common name checking.
 
 sslCommonNameList = <commonName1>, <commonName2>, ...
@@ -405,8 +403,6 @@ sslAltNameToCheck = <alternateName1>, <alternateName2>, ...
 * Accepts a comma-separated list of Subject Alternate Names to consider
   valid.
 * Items in this list are never validated against the SSL Common Name.
-* This feature does not work with the deployment server and client
-  communication over SSL.
 * Optional.  Defaults to no alternate name checking
 
 requireClientCert = <bool>
@@ -2104,6 +2100,9 @@ auto_rebalance_primaries = <bool>
   registers, the master redistributes the bucket primaries so the
   cluster can make use of any copies in the incoming peer.
 * Defaults to true.
+
+rebalance_primaries_execution_limit = <non-negative integer>
+* DEPRECATED. Use the 'rebalance_primaries_execution_limit_ms' setting instead.
 
 rebalance_primaries_execution_limit_ms = <non-negative integer>
 * Only valid for 'mode=master'.

@@ -1,4 +1,4 @@
-#   Version 7.1.9
+#   Version 7.1.10
 #
 # This file contains possible attributes and values you can use to configure
 # Splunk's web interface.
@@ -1050,6 +1050,15 @@ allowableTemplatePaths =  <directory> [, <directory>]...
 enable_risky_command_check = <bool>
 * Enable checks for data-exfiltrating search commands.
 * default true
+
+enableSearchJobXslt = <boolean>
+* Whether or not the search job request accepts XML stylesheet language (XSL)
+  as input to format search results.
+* If set to "true", the search job request accepts XSL as input
+  to format search results.
+* If set to "false", the search job request does not accept XSL as input
+  to format search results.
+* Default: true
 
 customFavicon = <pathToMyFile, myApp:pathToMyFile, or blank for default>
 * Customize the favicon image across the entire application. If no favicon image file, the favicon defaults to the Splunk favicon.
