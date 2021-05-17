@@ -1,4 +1,4 @@
-#   Version 7.3.2
+#   Version 7.3.3
 #
 # This file contains possible attributes and values for configuring
 # authentication via authentication.conf.
@@ -913,6 +913,13 @@ replicateCertificates = <boolean>
 * This setting is optional.
 * Default: true
 
+
+allowPartialSignatures = <boolean>
+* OPTIONAL
+* When enabled, the Splunk authentication system only requires the SAML assertion block to be
+  signed (but not necessarily the entire SAML response).
+* When disabled, the entire SAML response must be signed for the login to succeed.
+* Defaults to 'true'
 
 #####################
 # Map roles
