@@ -1,4 +1,4 @@
-#   Version 7.1.10
+#   Version 7.2.0
 #
 # This file contains possible attribute/value pairs for creating roles in
 # authorize.conf.  You can configure roles and granular access controls by
@@ -75,12 +75,36 @@ importRoles = <string>
 grantableRoles = <string>
 * Semicolon delimited list of roles that can be granted when edit_user
   capability is present.
-* By default, a role with edit_user capability can create/edit a user and
-  assign any role to them. But when grantableRoles is present, the roles
-  that can be assigned will be restricted to the ones provided.
+* By default, a role with 'edit_user' capability can create/edit a user and
+  assign any role to them. Roles assigned to users can be restricted by assigning
+  'edit_grantable_role' capability and specifying the roles in 'grantableRoles'.
+  When you set `grantableRoles`, the roles that can be assigned will be 
+  restricted to the ones whose capabilities are a proper subset of those in the 
+  roles provided.
 * For a role that has no edit_user capability, grantableRoles has no effect.
+* NOTE: A role that has been assigned 'grantableRoles' can list only the users
+  whose capabilities are a subset of all capabilities of the roles assigned to 
+  'grantableRoles'.
+* Example:
+  Consider a Splunk instance where role1-4 are assigned the following capabilities:
+  role1: c1, c2, c3
+  role2: c4, c5, c6
+  role3: c1, c6
+  role4: c4, c8
+  
+  Users user1-4 are assigned the following roles:
+  user1: role1
+  user2: role2
+  user3: role3
+  user4: role4
+
+  grantableRoles is defined as follows for the admin role:
+  [role_admin]
+  grantableRoles = role1;role2
+  
+  For the above configuration, the admin user can list/edit only user1, user2 
+  and user3 and can only assign roles role1, role2, and role3 to those users.
 * Defaults to not present.
-* Example: grantableRoles = role1;role2;role3
 
 srchFilter = <string>
 * Semicolon delimited list of search filters for this Role.
@@ -227,9 +251,6 @@ cumulativeRTSrchJobsQuota = <number>
   actually delete the raw data on disk, instead it masks the data 
   (via the index) from showing up in search results.
 
-[capability::delete_messages]
-* Lets a user delete system messages that appear in the UI navigation bar.
-
 [capability::dispatch_rest_to_indexers]
 * Lets a user dispatch the REST search command to indexers.
 
@@ -249,6 +270,10 @@ cumulativeRTSrchJobsQuota = <number>
 [capability::edit_encryption_key_provider]
 * Lets a user view and edit keyprovider properties when using
   the Server-Side Encryption (SSE) feature for a remote storage volume.
+
+[capability::request_pstacks]
+* Lets a user trigger pstacks generation of the main splunkd process
+  using a REST endpoint.
 
 [capability::edit_forwarders]
 * Lets a user edit settings for forwarding data, including settings 
@@ -273,14 +298,6 @@ cumulativeRTSrchJobsQuota = <number>
 [capability::edit_input_defaults]
 * Lets a user change the default hostname for input data through the server
   settings endpoint.
-
-[capability::edit_local_apps]
-* Lets a user edit apps on the local Splunk instance through the
-  local apps endpoint.
-* For full access to app management, also add the 'install_apps'
-  capability to the role.
-* To enable enforcement of the "install_apps" capability, see the
-  "enable_install_apps" setting in limits.conf.
 
 [capability::edit_monitor]
 * Lets a user add inputs and edit settings for monitoring files.
@@ -408,14 +425,6 @@ configuration.
 * Lets a user add a file as an input through inputcsv (except for 
   dispatch=t mode) and inputlookup.
 
-[capability::install_apps]
-* Lets a user install, uninstall, create, and update apps on the local
-  Splunk platform instance through the apps/local endpoint.
-* For full access to app management, also add the 'edit_local_apps'
-  capability to the role.
-* To enable enforcement of the "install_apps" capability, see the
-  "enable_install_apps" setting in limits.conf.
-
 [capability::license_tab]
 * (Deprecated) Lets a user access and change the license.
 
@@ -426,13 +435,7 @@ configuration.
 * Lets a user see if they are exceeding limits or reaching the expiration 
   date of their license. 
 * License warnings are displayed on the system banner.
-
-[capability::list_accelerate_search]
-* This capability is a subset of the 'accelerate_search' capability.
-* This capability grants access to the summaries that are required to run accelerated reports.
-* Users with this capability, but without the 'accelerate_search' capability, can run,
-  but not create, accelerated reports.
-
+  
 [capability::list_deployment_client]
 * Lets a user list the deployment clients.
 
@@ -550,3 +553,31 @@ scheduled_search and rtsearch capabilities must be enabled for the role.
 
 [capability::web_debug]
 * Lets a user access /_bump and /debug/** web debug endpoints.
+
+
+[capability::edit_statsd_transforms]
+* Lets a user define regular expressions to extract munged dimensions out of
+  metric_name in statsd metric data using services/data/transforms/statsdextractions
+  endpoint.
+
+[capability::edit_metric_schema]
+* Lets a user define the schema of the log data which needs to be converted
+  into metric format using services/data/metric-transforms/schema endpoint.
+
+[capability::list_workload_pools]
+* Lets a user list and view workload pool and workload status information through
+  the workloads endpoint.
+
+[capability::edit_workload_pools]
+* Lets a user create and edit workload pool and workload config information
+  (except workload rule) through the workloads endpoint.
+
+[capability::select_workload_pools]
+* Lets a user select a workload pool for a scheduled or an ad-hoc search.
+
+[capability::list_workload_rules]
+* Lets a user list and view workload rule information from the workload/rules
+  endpoint.
+
+[capability::edit_workload_rules]
+* Lets a user create and edit workload rules through the workloads/rules endpoint.

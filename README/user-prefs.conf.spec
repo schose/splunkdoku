@@ -1,4 +1,4 @@
-#   Version 7.1.10
+#   Version 7.2.0
 #
 # This file describes some of the settings that are used, and
 # can be configured on a per-user basis for use by the Splunk Web UI.
@@ -55,6 +55,7 @@ install_source_checksum = <string>
 search_syntax_highlighting = [light|dark|black-white]
 * Highlights different parts of a search string with different colors.
 * Defaults to light.
+* Dashboards ignore this setting.
 
 search_use_advanced_editor = <boolean>
 * Specifies whether the search bar is run using the advanced editor or in just plain text.
@@ -91,10 +92,6 @@ hideInstrumentationOptInModal = <boolean>
 default_earliest_time = <string>
 default_latest_time = <string>
 * Sets the global default time range across all apps, users, and roles on the search page.
-
-notification_python_3_impact = <string>
-* Flag to enable, disable, or snooze the python 3 impact notification dialog
-* default to true
 
 [role_<name>]
 
